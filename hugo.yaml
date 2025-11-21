@@ -1,0 +1,59 @@
+baseURL: "https://gustavomeloscheidt.github.io"
+title: Gustavo Scheidt
+pagination:
+  pagerSize: 10
+theme: PaperMod
+
+
+params:
+  defaultTheme: light
+  ShowFullTextinList: false 
+
+  profileMode:
+    enabled: true
+    title: "👋 Hello there!"
+    subtitle: >
+      My name is Gustavo Scheidt and I am a Master's student in Computer Vision & Artificial Intelligence
+      at Institut Polytechnique de Paris.  
+      I am passionate about AI, computer vision, and medical imaging research.
+      This is my personal blog — for projects and other inquiries, visit [my professional site](https://gscheidt.com).
+    imageUrl: "/assets/fotopessoal.png"      
+    imageTitle: "Gustavo Scheidt"
+    customCSS: ["css/extended/profile.css"]
+    imageWidth: 220
+    imageHeight: 220
+  assets:
+    favicon: "/assets/icone_site.png"
+
+  # Social icons (mostram embaixo da bio)
+  socialIcons:
+    - name: github
+      url: "https://github.com/GustavoMeloScheidt"
+    - name: linkedin
+      url: "https://www.linkedin.com/in/gustavo-melo-scheidt/"
+    - name: instagram
+      url: "https://www.instagram.com/gustavoscheidt_/"
+    - name: email
+      url: "mailto:gustavomeloscheidt@gmail.com"
+    
+  # Garante que os posts apareçam abaixo do perfil
+  mainSections:
+    - posts
+
+menu:
+  main:
+  - identifier: home
+    name: Home
+    url: /
+    weight: 10
+  - identifier: posts
+    name: Blog
+    url: /posts/
+    weight: 20
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+

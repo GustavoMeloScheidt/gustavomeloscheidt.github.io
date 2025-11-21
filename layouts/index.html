@@ -1,0 +1,63 @@
+{{ define "main" }}
+
+{{ $p := .Site.Params.profileMode }}
+{{ if $p.enabled }}
+<section class="home-info" style="margin:0 auto 4rem auto; max-width:760px;">
+  <!-- FOTO centralizada -->
+  {{ with $p.imageUrl }}
+    <div class="avatar-wrap">
+        <img class="avatar" src="{{ . }}" alt="{{ $p.imageTitle }}" loading="eager" fetchpriority="high">
+    </div>
+    {{ end }}
+
+  <!-- COLUNA com conteúdo alinhado à esquerda -->
+  <div style="margin:0 auto; max-width:760px;">
+    <h1 style="margin:0 0 .75rem 0; text-align:left;">{{ $p.title | markdownify }}</h1>
+
+    <div style="text-align:left; line-height:1.6; color:var(--secondary);">
+      {{ $p.subtitle | markdownify }}
+    </div>
+
+    <!-- Botões alinhados à esquerda -->
+    <div style="margin-top:1.2rem; display:flex; gap:.6rem; flex-wrap:wrap; justify-content:flex-start;">
+      {{ range $p.buttons }}
+        <a href="{{ .url }}" class="button"
+           style="background:var(--entry); padding:8px 16px; border-radius:8px; text-decoration:none;">
+          {{ .name }}
+        </a>
+      {{ end }}
+    </div>
+
+    <!-- Ícones sociais alinhados à esquerda -->
+    <div style="margin-top:1rem; text-align:left;">
+      {{ partial "social_icons.html" (dict "socialIcons" .Site.Params.socialIcons) }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+<!-- POSTS -->
+<section class="homepage-posts" style="max-width:900px; margin:0 auto;">
+  <h2 style="margin:0 0 1.25rem 0; text-align:left;">📚 Recent Posts</h2>
+
+  {{ $sections := .Site.Params.mainSections | default (slice "posts") }}
+  {{ range first 6 (where .Site.RegularPages "Section" "in" $sections) }}
+    <article style="margin-bottom:1rem; padding:1.1rem 1.2rem; border-radius:12px;
+                    background:var(--entry); box-shadow:0 2px 6px rgba(0,0,0,0.08);">
+      <h3 style="margin:0 0 .4rem 0;">
+        <a href="{{ .Permalink }}" style="text-decoration:none; color:inherit;">{{ .Title }}</a>
+      </h3>
+      <p style="color:var(--secondary); font-size:.95rem; margin:0;">{{ .Summary }}</p>
+      <p style="color:gray; font-size:.85rem; margin:.5rem 0 0 0;">{{ .Date.Format "January 2, 2006" }}</p>
+    </article>
+  {{ end }}
+
+  <div style="margin-top:.25rem; text-align:left;">
+    <a href="/posts/" style="text-decoration:none; padding:8px 14px; border-radius:10px;
+                             background:var(--entry); display:inline-block;">
+      See all posts →
+    </a>
+  </div>
+</section>
+
+{{ end }}
