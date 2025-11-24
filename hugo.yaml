@@ -24,6 +24,9 @@ params:
     imageHeight: 220
   assets:
     favicon: "/assets/icone_site.png"
+    favicon16x16: "/assets/icone_site.png"
+    favicon32x32: "/assets/icone_site.png"
+    apple_touch_icon: "/assets/icone_site.png"
 
   # Social icons (mostram embaixo da bio)
   socialIcons:

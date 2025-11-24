@@ -6,8 +6,15 @@
     <description>Recent content in Unity on Gustavo Scheidt</description>
     <generator>Hugo -- 0.150.0</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 25 Oct 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 31 Oct 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/unity/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Master 2 - Human Computer Interaction: Reconstructing Myself in 3D with Gaussian Splatting (Unity)</title>
+      <link>http://localhost:1313/posts/lab3/</link>
+      <pubDate>Fri, 31 Oct 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/lab3/</guid>
+      <description>A hybrid scientific and practical exploration of Gaussian Splatting, including theory, pipeline, and a personal 3D reconstruction imported into Unity.</description>
+    </item>
     <item>
       <title>Master 2 - Human Computer Interaction: Lab Homework 2 – Mobile Controls &amp; Deployment for ML-Agents Project</title>
       <link>http://localhost:1313/posts/lab2/</link>
