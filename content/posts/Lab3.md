@@ -1,6 +1,6 @@
 ---
-title: "Reconstructing Myself in 3D with Gaussian Splatting (Unity)"
-date: 2025-11-24
+title: "Master 2 - Human Computer Interaction: Reconstructing Myself in 3D with Gaussian Splatting (Unity)"
+date: 2025-10-31
 description: "A hybrid scientific and practical exploration of Gaussian Splatting, including theory, pipeline, and a personal 3D reconstruction imported into Unity."
 tags: ["Gaussian Splatting", "Unity", "3D Reconstruction", "Computer Vision", "Master VAR", "Human-Centered Computing"]
 ---
