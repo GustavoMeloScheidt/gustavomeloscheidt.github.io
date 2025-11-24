@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="light">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Master 2 - Human Computer Interaction: Lab Homework 1 – Blog Setup &amp; Unity ML-Agents Environment | Gustavo Scheidt</title>
+<meta name="keywords" content="HCI, Unity, ML-Agents, Reinforcement Learning, Lab Work">
+<meta name="description" content="Setting up an online blog, configuring Unity ML-Agents, testing environments, overcoming issues, and extending the baseline scenario.">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/posts/lab1/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cf367d7275bbac0cf2600a8cfa5300d17223b755c0fc0749190bde72230c0db7.css" integrity="sha256-zzZ9cnW7rAzyYAqM&#43;lMA0XIjt1XA/AdJGQveciMMDbc=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/assets/icone_site.png">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/lab1/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    }
+
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Gustavo Scheidt (Alt + H)">Gustavo Scheidt</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/posts/" title="Blog">
+                    <span>Blog</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Master 2 - Human Computer Interaction: Lab Homework 1 – Blog Setup &amp; Unity ML-Agents Environment
+    </h1>
+    <div class="post-description">
+      Setting up an online blog, configuring Unity ML-Agents, testing environments, overcoming issues, and extending the baseline scenario.
+    </div>
+    <div class="post-meta"><span title='2025-10-18 00:00:00 +0000 UTC'>October 18, 2025</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="lab-homework-1">Lab Homework 1<a hidden class="anchor" aria-hidden="true" href="#lab-homework-1">#</a></h1>
+<p><em>Blog Setup &amp; Unity ML-Agents Environment</em><br>
+<em>Master’s in Computer Vision &amp; AI — Gustavo</em></p>
+<blockquote>
+<p>This post documents the full process of setting up my online blog for the course and configuring the Unity ML-Agents environment. Instead of simply presenting results, I focus on the <strong>process</strong>, the <strong>problems</strong>, and the <strong>lessons learned</strong>, as the lab sheet requests.</p></blockquote>
+<hr>
+<h1 id="1-lab-a--blog-setup-5-points">1) Lab A – Blog Setup (5 Points)<a hidden class="anchor" aria-hidden="true" href="#1-lab-a--blog-setup-5-points">#</a></h1>
+<h3 id="goal">Goal<a hidden class="anchor" aria-hidden="true" href="#goal">#</a></h3>
+<p>Create an online blog to document every lab assignment throughout the course.</p>
+<h3 id="my-choice-hugo--github-pages">My Choice: <strong>Hugo + GitHub Pages</strong><a hidden class="anchor" aria-hidden="true" href="#my-choice-hugo--github-pages">#</a></h3>
+<p>I chose <strong>Hugo</strong> because it is:</p>
+<ul>
+<li>lightweight and extremely fast</li>
+<li>easy to deploy on GitHub Pages</li>
+<li>ideal for technical writing with Markdown</li>
+<li>highly customizable with themes</li>
+<li>easy to maintain during the semester</li>
+</ul>
+<h3 id="steps-i-followed">Steps I followed<a hidden class="anchor" aria-hidden="true" href="#steps-i-followed">#</a></h3>
+<h4 id="1-installing-hugo">1. Installing Hugo<a hidden class="anchor" aria-hidden="true" href="#1-installing-hugo">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>brew install hugo
+</span></span></code></pre></div><h4 id="2-creating-the-blog-structure">2. Creating the blog structure<a hidden class="anchor" aria-hidden="true" href="#2-creating-the-blog-structure">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new site hci-blog
+</span></span></code></pre></div><h4 id="3-adding-a-theme">3. Adding a theme<a hidden class="anchor" aria-hidden="true" href="#3-adding-a-theme">#</a></h4>
+<p>I selected the theme <strong>PaperMod</strong>, which is clean, minimal, and ideal for academic posts.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git submodule add https://github.com/adityatelange/hugo-PaperMod themes/PaperMod
+</span></span></code></pre></div><p>Then I updated the <code>config.toml</code> to activate the theme and add metadata.</p>
+<h4 id="4-creating-the-first-post">4. Creating the first post<a hidden class="anchor" aria-hidden="true" href="#4-creating-the-first-post">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new posts/lab-homework-1.md
+</span></span></code></pre></div><h4 id="5-deploying-to-github-pages">5. Deploying to GitHub Pages<a hidden class="anchor" aria-hidden="true" href="#5-deploying-to-github-pages">#</a></h4>
+<p>I connected the blog to a GitHub repository and deployed with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo --minify
+</span></span></code></pre></div><p>The generated <code>public/</code> folder became my GitHub Pages branch.</p>
+<h1 id="2-lab-b--unity-ml-agents-setup--testing-10-points">2) Lab B – Unity ML-Agents Setup &amp; Testing (10 Points)<a hidden class="anchor" aria-hidden="true" href="#2-lab-b--unity-ml-agents-setup--testing-10-points">#</a></h1>
+<h3 id="goal-1">Goal<a hidden class="anchor" aria-hidden="true" href="#goal-1">#</a></h3>
+<p>Install Unity, set up the ML-Agents toolkit, run the example learning environments, and validate that the reinforcement learning pipeline works locally.</p>
+<h3 id="tools-used">Tools Used<a hidden class="anchor" aria-hidden="true" href="#tools-used">#</a></h3>
+<ul>
+<li><strong>Unity 2022 LTS</strong></li>
+<li><strong>ML-Agents 4.0</strong></li>
+<li>Python 3.10 environment with <code>mlagents</code> installed</li>
+<li>Example environment: <strong>3D Balance Ball</strong></li>
+</ul>
+<h1 id="21-installing-unity--ml-agents">2.1 Installing Unity &amp; ML-Agents<a hidden class="anchor" aria-hidden="true" href="#21-installing-unity--ml-agents">#</a></h1>
+<h3 id="-installing-unity">① Installing Unity<a hidden class="anchor" aria-hidden="true" href="#-installing-unity">#</a></h3>
+<p>I used <strong>Unity Hub</strong> to install:</p>
+<ul>
+<li>Unity 2022.3 (LTS)</li>
+<li>Required modules: Windows + Mac build support</li>
+</ul>
+<h3 id="-installing-ml-agents-toolkit">② Installing ML-Agents Toolkit<a hidden class="anchor" aria-hidden="true" href="#-installing-ml-agents-toolkit">#</a></h3>
+<p>I followed the official documentation:</p>
+<p><a href="https://docs.unity3d.com/Packages/com.unity.ml-agents@4.0/manual/index.html">https://docs.unity3d.com/Packages/com.unity.ml-agents@4.0/manual/index.html</a></p>
+<p>The Python package was installed with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install mlagents
+</span></span><span style="display:flex;"><span>pip install torch
+</span></span></code></pre></div><h3 id="-cloning-the-ml-agents-repository">③ Cloning the ML-Agents Repository<a hidden class="anchor" aria-hidden="true" href="#-cloning-the-ml-agents-repository">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/Unity-Technologies/ml-agents
+</span></span></code></pre></div><h3 id="-opening-the-example-project">④ Opening the Example Project<a hidden class="anchor" aria-hidden="true" href="#-opening-the-example-project">#</a></h3>
+<p>I opened the folder <code>Project/</code> inside Unity Hub.</p>
+<p>Unity automatically imported all ML-Agents components and environments.</p>
+<h1 id="22-first-test-running-3d-balance-ball">2.2 First Test: Running “3D Balance Ball”<a hidden class="anchor" aria-hidden="true" href="#22-first-test-running-3d-balance-ball">#</a></h1>
+<h3 id="what-i-tested">What I Tested<a hidden class="anchor" aria-hidden="true" href="#what-i-tested">#</a></h3>
+<ul>
+<li>Agent behavior scripts</li>
+<li>Rewards</li>
+<li>Training backend (<code>mlagents-learn</code>)</li>
+<li>Communication between Unity ↔ Python</li>
+</ul>
+<h3 id="running-training">Running training<a hidden class="anchor" aria-hidden="true" href="#running-training">#</a></h3>
+<p>Inside the Unity project folder:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mlagents-learn config/trainer_config.yaml --run-id<span style="color:#f92672">=</span>BalanceBallTest
+</span></span></code></pre></div><p>After pressing <strong>Play</strong> in Unity, training successfully started.</p>
+<h3 id="what-i-observed">What I observed<a hidden class="anchor" aria-hidden="true" href="#what-i-observed">#</a></h3>
+<ul>
+<li>Agents gradually balanced the ball longer</li>
+<li>Reward curves increased steadily</li>
+<li>No communication errors between Unity and Python</li>
+<li>Training was stable with PPO</li>
+</ul>
+<h1 id="3-extending-the-project-idea-5-points">3) Extending the Project Idea (5 Points)<a hidden class="anchor" aria-hidden="true" href="#3-extending-the-project-idea-5-points">#</a></h1>
+<p>The lab asks to <strong>extend the idea</strong> of the existing environment to a new situation.</p>
+<h3 id="my-extension-3d-balance-ball--wind-edition">My Extension: “3D Balance Ball – Wind Edition”<a hidden class="anchor" aria-hidden="true" href="#my-extension-3d-balance-ball--wind-edition">#</a></h3>
+<p>I modified the environment by adding:</p>
+<ul>
+<li>A <strong>wind zone</strong> that changes direction randomly</li>
+<li>A <strong>temporary gust</strong> effect that pushes the platform</li>
+<li>A <strong>noise factor</strong> forcing the agent to adapt more dynamically</li>
+</ul>
+<h3 id="why-this-extension-is-interesting">Why this extension is interesting<a hidden class="anchor" aria-hidden="true" href="#why-this-extension-is-interesting">#</a></h3>
+<p>It transforms a deterministic environment into a <strong>stochastic control task</strong>, closer to real-world applications where actions have unpredictable outcomes.</p>
+<h3 id="expected-behavior-to-learn">Expected behavior to learn<a hidden class="anchor" aria-hidden="true" href="#expected-behavior-to-learn">#</a></h3>
+<ul>
+<li>Stronger corrective torques</li>
+<li>Anticipation of perturbations</li>
+<li>Learning a more robust policy</li>
+</ul>
+<p>This extension will be useful for future reinforcement learning experiments.</p>
+<h1 id="4-problems-encountered--how-i-solved-them">4) Problems Encountered &amp; How I Solved Them<a hidden class="anchor" aria-hidden="true" href="#4-problems-encountered--how-i-solved-them">#</a></h1>
+<h3 id="problem-1--package-import-errors">Problem 1 — Package Import Errors<a hidden class="anchor" aria-hidden="true" href="#problem-1--package-import-errors">#</a></h3>
+<p>When opening the ML-Agents project, Unity threw warnings about script compilation order.</p>
+<p><strong>Solution:</strong>
+Reimported the folder <code>Packages/ML-Agents</code> and let Unity rebuild scripts.</p>
+<h3 id="problem-2--python-not-communicating-with-unity">Problem 2 — Python not communicating with Unity<a hidden class="anchor" aria-hidden="true" href="#problem-2--python-not-communicating-with-unity">#</a></h3>
+<p>The console showed:</p>
+<pre tabindex="0"><code>Unity.EnvironmentException: Couldn&#39;t connect to trainer.
+</code></pre><p><strong>Solution:</strong></p>
+<ul>
+<li>Ensured correct Python version (3.10).</li>
+<li>Checked that firewall wasn’t blocking port 5004.</li>
+<li>Re-ran using:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mlagents-learn --env<span style="color:#f92672">=</span>Build/Ball.app
+</span></span></code></pre></div><h3 id="problem-3--slow-training-due-to-gpu-conflicts">Problem 3 — Slow training due to GPU conflicts<a hidden class="anchor" aria-hidden="true" href="#problem-3--slow-training-due-to-gpu-conflicts">#</a></h3>
+<p>Torch was not detecting the GPU initially.</p>
+<p><strong>Solution:</strong>
+Reinstalled PyTorch with proper CUDA support.</p>
+<h1 id="5-recommendations-for-future-students">5) Recommendations for Future Students<a hidden class="anchor" aria-hidden="true" href="#5-recommendations-for-future-students">#</a></h1>
+<p>Based on my experience, here is what I wish I knew at the start:</p>
+<ul>
+<li>
+<p><strong>Unity versions matter</strong> — always use LTS.</p>
+</li>
+<li>
+<p>ML-Agents requires the <strong>right Python version</strong> (3.10 works best).</p>
+</li>
+<li>
+<p>Don’t skip reading the <strong>Learning Environment Examples</strong> documentation:
+<a href="https://docs.unity3d.com/Packages/com.unity.ml-agents@4.0/manual/Learning-Environment-Examples.html">https://docs.unity3d.com/Packages/com.unity.ml-agents@4.0/manual/Learning-Environment-Examples.html</a></p>
+</li>
+<li>
+<p>Start with <strong>Balance Ball</strong> — it is the best debugging baseline.</p>
+</li>
+<li>
+<p>When things break (and they will), check:</p>
+<ol>
+<li>Python environment</li>
+<li>Unity editor console</li>
+<li>ML-Agents communication logs</li>
+</ol>
+</li>
+</ul>
+<p>Reinforcement learning pipelines are fragile; patience and incremental debugging are essential.</p>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/hci/">HCI</a></li>
+      <li><a href="http://localhost:1313/tags/unity/">Unity</a></li>
+      <li><a href="http://localhost:1313/tags/ml-agents/">ML-Agents</a></li>
+      <li><a href="http://localhost:1313/tags/reinforcement-learning/">Reinforcement Learning</a></li>
+      <li><a href="http://localhost:1313/tags/lab-work/">Lab Work</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2025 <a href="http://localhost:1313/">Gustavo Scheidt</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer></body>
+
+</html>

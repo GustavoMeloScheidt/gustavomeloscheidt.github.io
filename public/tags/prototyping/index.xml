@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Prototyping on Gustavo Scheidt</title>
+    <link>http://localhost:1313/tags/prototyping/</link>
+    <description>Recent content in Prototyping on Gustavo Scheidt</description>
+    <generator>Hugo -- 0.150.0</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 04 Oct 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/prototyping/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Master 2 - Human Computer Interaction: Homework 3 – Enhancing Human Abilities through Augmented Reality</title>
+      <link>http://localhost:1313/posts/homework3/</link>
+      <pubDate>Sat, 04 Oct 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/homework3/</guid>
+      <description>Ideation for interfaces that extend human perception and cognition in the age of augmented reality and building and evaluating the first prototype of Dumont, an intelligent travel planner focused on sustainability and optimization.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Lab Work on Gustavo Scheidt</title>
+    <link>http://localhost:1313/tags/lab-work/</link>
+    <description>Recent content in Lab Work on Gustavo Scheidt</description>
+    <generator>Hugo -- 0.150.0</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 18 Oct 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/lab-work/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Master 2 - Human Computer Interaction: Lab Homework 1 – Blog Setup &amp; Unity ML-Agents Environment</title>
+      <link>http://localhost:1313/posts/lab1/</link>
+      <pubDate>Sat, 18 Oct 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/lab1/</guid>
+      <description>Setting up an online blog, configuring Unity ML-Agents, testing environments, overcoming issues, and extending the baseline scenario.</description>
+    </item>
+  </channel>
+</rss>
