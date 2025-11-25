@@ -9,237 +9,136 @@ tags: ["Unity", "Mobile Development", "ML-Agents", "Reinforcement Learning", "HC
 *Adapting the ML-Agents TrackBot Project to Mobile*  
 *Master’s in Computer Vision & AI — Gustavo*
 
-This lab extends the reinforcement-learning final project of this class: an RL agent (*TrackBot*) trained using Unity ML-Agents to reach a randomly placed “Goal.” 
+This lab adapts the original TrackBot ML‑Agents reinforcement learning environment into a **mobile‑friendly version** using a **virtual joystick**.  
+The original TrackBot could only be controlled through discrete keyboard actions, but this version introduces a **continuous mobile joystick** that directly maps the drag direction to TrackBot's movement.
 
 ---
 <!--more-->
+![Mobile Trackbot](/assets/mobile_trackbot.gif)
 
-# 1) The agent has **three discrete actions**:
+## 1) Original Agent Behavior  
+The TrackBot originally had three discrete actions:
 
-1. Move forward  
-2. Rotate left  
-3. Rotate right  
+1. Move Forward  
+2. Rotate Left  
+3. Rotate Right  
 
-These actions were originally controlled on desktop by **arrow keys** (via `Heuristic()`), but this lab required adapting the interaction model to **mobile input**, where keyboard keys do not exist.
-
-I chose moving with *three on-screen buttons* as the most appropriate mapping.  
-It reflects the discrete nature of the agent and matches the logic used in the RL training.
-
-
-# 2) Designing Mobile Interaction (10 Points)
-
-## You may be asking youself: Why On-Screen Buttons?
-The TrackBot only accepts *discrete* actions.  
-Mobile joysticks produce continuous input, while gyroscope introduces unnecessary noise and instability.
-
-On-screen buttons provide:
-
-- clear affordance  
-- ease of learning  
-- perfect mapping to discrete actions  
-- low ambiguity (important for debugging)  
-- reproducibility across devices  
-
-This matches good HCI principles: **consistency**, **match between system and real-world expectations**, and **low cognitive overhead**.
+These were used during training and were accessible through `Heuristic()` for desktop control.
 
 
-# 2.1 Creating the Mobile UI
+## 2) Designing Mobile Interaction  
+### You may be asking yourself: Why a joystick instead of buttons?
+A joystick provides:
 
-Using Unity’s UI Toolkit (or Canvas + Buttons), I created three buttons:
+- Natural direction‑based input  
+- Intuitive mapping: direction dragged = direction robot moves  
+- Smooth motion  
+- Works extremely well with continuous 2D navigation  
+- Much better mobile UX than three fixed buttons  
 
-- **Forward**  
-- **Turn Left**  
-- **Turn Right**
+This follows core HCI principles:
 
-Each button triggers a corresponding value stored in a `mobileAction` variable.  
-This action is then used inside the `Heuristic()` function of the agent.
+- **Direct manipulation**
+- **Low cognitive load**
+- **Immediate feedback**
+- **Consistency with mobile game patterns**
 
-The layout is simple:
+
+## 3) Building the Mobile Joystick
+
+### 3.1 Joystick UI  
+Created using Unity Canvas:
 
 ```
-
-[   Turn Left   ]   [ Forward ]   [   Turn Right   ]
-
+Canvas
+ └── JoystickBackground (Image)
+       └── JoystickHandle (Image)
 ```
 
-Placed at the bottom of the screen, centered horizontally.
+The background stays anchored bottom‑left.  
+The handle moves inside it when dragging.
 
 
-# 2.2 Implementing Mobile Input
-
-## MobileInputController.cs
-I created a small script that stores which button is currently being pressed.
+## 3.2 Joystick Script  
+A simplified joystick script reads drag direction and returns a normalized vector.
 
 ```csharp
-using UnityEngine;
-
-public class MobileInputController : MonoBehaviour
+public Vector2 GetDirection()
 {
-    public int CurrentAction = 0;
-
-    public void OnForwardPressed()
-    {
-        CurrentAction = 1;
-    }
-
-    public void OnLeftPressed()
-    {
-        CurrentAction = 2;
-    }
-
-    public void OnRightPressed()
-    {
-        CurrentAction = 3;
-    }
-
-    public void OnButtonReleased()
-    {
-        CurrentAction = 0; // no action
-    }
+    return input;
 }
 ```
 
-Each UI button calls these methods through Unity’s **OnClick()** and **OnPointerDown/Up** events.
+This gives a vector in range [-1, 1] × [-1, 1].
 
 
-# 2.3 Connecting the Input to TrackBot
+## 3.3 TrackBot Mobile Controller  
+The TrackBot now:
 
-Inside **`TrackBot.cs`** (your real file ), in the `Heuristic()` method, I replaced the keyboard logic with mobile logic:
-
-```csharp
-public MobileInputController mobileInput;
-
-public override void Heuristic(in ActionBuffers actionsOut)
-{
-    var discreteActionsOut = actionsOut.DiscreteActions;
-
-    // Default: do nothing
-    discreteActionsOut[0] = 0;
-
-    // Mobile action (from UI buttons)
-    if (mobileInput != null)
-    {
-        discreteActionsOut[0] = mobileInput.CurrentAction;
-    }
-}
-```
-
-This ensures:
-
-* desktop training still works
-* mobile now controls the agent
-* RL logic is unchanged
-
-This approach abstracts the input cleanly and matches the architecture expected in ML-Agents.
-
-
-# 3) Deploying the Application (5 Points)
-
-The second part of the lab was to **deploy the adapted application to a mobile device**.
-
-I followed the official Unity documentation for Android deployment:
-
-[https://docs.unity3d.com/Manual/android-BuildProcess.html](https://docs.unity3d.com/Manual/android-BuildProcess.html)
-
-
-# 3.1 Environment Setup
-
-In Unity Hub, I installed:
-
-* Android Build Support
-* Android SDK
-* Android NDK
-* OpenJDK
-
-This step is essential, without it Unity cannot export APKs.
-
-
-# 3.2 Configuring the Build Settings
-
-In *File → Build Settings → Android*:
-
-* Switched platform to Android
-* Set resolution & presentation to portrait
-* Disabled unused features for performance
-* Ensured minimum API level ≥ Android 8.0
-
-
-# 3.3 Deploying to Device
-
-Steps:
-
-1. Enabled developer mode on the phone
-2. Enabled USB debugging
-3. Connected phone via ADB
-4. Clicked **Build & Run**
-
-Unity compiled the APK and installed it directly on the device.
-
-
-# 4) Testing the Mobile Application
-
-After deployment, the TrackBot environment worked as expected:
-
-* Touch buttons correctly triggered actions
-* The TrackBot rotated and moved exactly like on desktop
-* Rewards, collisions, and episode resets remained unchanged
-
-The GUI debugging script (`GUI_TrackBot.cs` ) worked perfectly on mobile and was very helpful for observing:
-
-* episode number
-* step count
-* cumulative reward
-
-This helped confirm that the RL logic stayed intact.
-
-
-# 5) Problems Encountered & How I Solved Them
-
-### *Problem 1 — Button presses felt "off" (agent kept moving after releasing).*
-
-**Cause:**
-Using only `OnClick()` does not detect release.
-
-**Fix:**
-Use **OnPointerDown** and **OnPointerUp** events:
-
-* Down → set action
-* Up → return to action 0
-
-
-### *Problem 2 — Touch inputs not detected in build.*
-
-**Cause:** EventSystem missing in scene.
-
-**Fix:**
-Added:
-
-```
-GameObject → UI → EventSystem
-```
-
-
-### *Problem 3 — The TrackBot rotated too fast on mobile.*
-
-**Cause:** User presses faster than keyboard repeat rate.
-
-**Fix:**
-Reduced rotation speed on mobile builds using:
+- Rotates smoothly toward joystick direction  
+- Moves forward based on joystick magnitude  
+- Uses Rigidbody for physics‑friendly motion  
 
 ```csharp
-#if UNITY_ANDROID
-_rotationSpeed = 120f;
-#endif
+Vector3 moveDir = new Vector3(dir.x, 0, dir.y);
+transform.rotation = Quaternion.Lerp(...);
+rb.MovePosition(...);
 ```
 
-# Conclusion
+This creates a very natural 2D robot‑like movement.
 
-In summary: this lab was to show the transformation of the TrackBot RL experiment into a functional mobile application.
 
-I learned:
+## 4) Deployment to Mobile (Android)
 
-* how to create mobile-friendly UI
-* how to deploy Unity applications to Android
-* how to debug mobile behavior
+### Requirements installed via Unity Hub:
+- Android Build Support  
+- SDK, NDK, OpenJDK  
 
+### Build Settings:
+- Switch platform → Android  
+- Resolution = Landscape  
+- ARM64 enabled  
+- Minimal API Level = Android 8.0  
+
+### Steps:
+1. Enable USB debugging  
+2. Connect device  
+3. Press **Build & Run**  
+
+Unity automatically builds an APK and installs it on the phone.
+
+
+## 5) Mobile Testing  
+
+The final mobile build works as expected:
+
+- Joystick controls movement in all directions  
+- Touch input is smooth and responsive  
+- TrackBot physics identical to desktop  
+- Rewards, resets, collisions unchanged  
+- Training remains unaffected because joystick control is separate from ML‑Agents policy inference  
+
+
+## 6) Problems & Solutions  
+
+### **Problem:** Touch release not resetting movement  
+**Fix:** Use `OnPointerUp` instead of `OnClick`.
+
+### **Problem:** Joystick not working on mobile  
+**Fix:** EventSystem missing. Added automatically via  
+`GameObject → UI → EventSystem`.
+
+### **Problem:** TrackBot too sensitive  
+**Fix:** Clamp joystick magnitude and reduce speed on mobile.
+
+
+## Conclusion  
+This lab successfully demonstrates:
+
+- Converting an ML‑Agents environment into a mobile‑friendly experience  
+- Implementing an intuitive touch‑based joystick  
+- Deploying and testing a Unity mobile build  
+- Preserving the RL logic while adding manual control  
+
+The TrackBot environment is now fully usable on mobile and much more interactive.
 

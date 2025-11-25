@@ -10,6 +10,7 @@ tags: ["Gaussian Splatting", "Unity", "3D Reconstruction", "Computer Vision", "M
 
 This blog post combines both the **theoretical concepts** from the lecture slides and the **practical experiment** where I reconstructed **myself** and rendered the final Gaussian model in Unity.
 
+---
 <!--more-->
 
 

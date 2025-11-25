@@ -95,171 +95,107 @@
   <div class="post-content"><h1 id="lab-homework-2">Lab Homework 2<a hidden class="anchor" aria-hidden="true" href="#lab-homework-2">#</a></h1>
 <p><em>Adapting the ML-Agents TrackBot Project to Mobile</em><br>
 <em>Master’s in Computer Vision &amp; AI — Gustavo</em></p>
-<p>This lab extends the reinforcement-learning final project of this class: an RL agent (<em>TrackBot</em>) trained using Unity ML-Agents to reach a randomly placed “Goal.”</p>
+<p>This lab adapts the original TrackBot ML‑Agents reinforcement learning environment into a <strong>mobile‑friendly version</strong> using a <strong>virtual joystick</strong>.<br>
+The original TrackBot could only be controlled through discrete keyboard actions, but this version introduces a <strong>continuous mobile joystick</strong> that directly maps the drag direction to TrackBot&rsquo;s movement.</p>
 <hr>
-<h1 id="1-the-agent-has-three-discrete-actions">1) The agent has <strong>three discrete actions</strong>:<a hidden class="anchor" aria-hidden="true" href="#1-the-agent-has-three-discrete-actions">#</a></h1>
+<p><img alt="Mobile Trackbot" loading="lazy" src="/assets/mobile_trackbot.gif"></p>
+<h2 id="1-original-agent-behavior">1) Original Agent Behavior<a hidden class="anchor" aria-hidden="true" href="#1-original-agent-behavior">#</a></h2>
+<p>The TrackBot originally had three discrete actions:</p>
 <ol>
-<li>Move forward</li>
-<li>Rotate left</li>
-<li>Rotate right</li>
+<li>Move Forward</li>
+<li>Rotate Left</li>
+<li>Rotate Right</li>
 </ol>
-<p>These actions were originally controlled on desktop by <strong>arrow keys</strong> (via <code>Heuristic()</code>), but this lab required adapting the interaction model to <strong>mobile input</strong>, where keyboard keys do not exist.</p>
-<p>I chose moving with <em>three on-screen buttons</em> as the most appropriate mapping.<br>
-It reflects the discrete nature of the agent and matches the logic used in the RL training.</p>
-<h1 id="2-designing-mobile-interaction-10-points">2) Designing Mobile Interaction (10 Points)<a hidden class="anchor" aria-hidden="true" href="#2-designing-mobile-interaction-10-points">#</a></h1>
-<h2 id="you-may-be-asking-youself-why-on-screen-buttons">You may be asking youself: Why On-Screen Buttons?<a hidden class="anchor" aria-hidden="true" href="#you-may-be-asking-youself-why-on-screen-buttons">#</a></h2>
-<p>The TrackBot only accepts <em>discrete</em> actions.<br>
-Mobile joysticks produce continuous input, while gyroscope introduces unnecessary noise and instability.</p>
-<p>On-screen buttons provide:</p>
+<p>These were used during training and were accessible through <code>Heuristic()</code> for desktop control.</p>
+<h2 id="2-designing-mobile-interaction">2) Designing Mobile Interaction<a hidden class="anchor" aria-hidden="true" href="#2-designing-mobile-interaction">#</a></h2>
+<h3 id="you-may-be-asking-yourself-why-a-joystick-instead-of-buttons">You may be asking yourself: Why a joystick instead of buttons?<a hidden class="anchor" aria-hidden="true" href="#you-may-be-asking-yourself-why-a-joystick-instead-of-buttons">#</a></h3>
+<p>A joystick provides:</p>
 <ul>
-<li>clear affordance</li>
-<li>ease of learning</li>
-<li>perfect mapping to discrete actions</li>
-<li>low ambiguity (important for debugging)</li>
-<li>reproducibility across devices</li>
+<li>Natural direction‑based input</li>
+<li>Intuitive mapping: direction dragged = direction robot moves</li>
+<li>Smooth motion</li>
+<li>Works extremely well with continuous 2D navigation</li>
+<li>Much better mobile UX than three fixed buttons</li>
 </ul>
-<p>This matches good HCI principles: <strong>consistency</strong>, <strong>match between system and real-world expectations</strong>, and <strong>low cognitive overhead</strong>.</p>
-<h1 id="21-creating-the-mobile-ui">2.1 Creating the Mobile UI<a hidden class="anchor" aria-hidden="true" href="#21-creating-the-mobile-ui">#</a></h1>
-<p>Using Unity’s UI Toolkit (or Canvas + Buttons), I created three buttons:</p>
+<p>This follows core HCI principles:</p>
 <ul>
-<li><strong>Forward</strong></li>
-<li><strong>Turn Left</strong></li>
-<li><strong>Turn Right</strong></li>
+<li><strong>Direct manipulation</strong></li>
+<li><strong>Low cognitive load</strong></li>
+<li><strong>Immediate feedback</strong></li>
+<li><strong>Consistency with mobile game patterns</strong></li>
 </ul>
-<p>Each button triggers a corresponding value stored in a <code>mobileAction</code> variable.<br>
-This action is then used inside the <code>Heuristic()</code> function of the agent.</p>
-<p>The layout is simple:</p>
-<pre tabindex="0"><code>
-[   Turn Left   ]   [ Forward ]   [   Turn Right   ]
-</code></pre><p>Placed at the bottom of the screen, centered horizontally.</p>
-<h1 id="22-implementing-mobile-input">2.2 Implementing Mobile Input<a hidden class="anchor" aria-hidden="true" href="#22-implementing-mobile-input">#</a></h1>
-<h2 id="mobileinputcontrollercs">MobileInputController.cs<a hidden class="anchor" aria-hidden="true" href="#mobileinputcontrollercs">#</a></h2>
-<p>I created a small script that stores which button is currently being pressed.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> UnityEngine;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MobileInputController</span> : MonoBehaviour
+<h2 id="3-building-the-mobile-joystick">3) Building the Mobile Joystick<a hidden class="anchor" aria-hidden="true" href="#3-building-the-mobile-joystick">#</a></h2>
+<h3 id="31-joystick-ui">3.1 Joystick UI<a hidden class="anchor" aria-hidden="true" href="#31-joystick-ui">#</a></h3>
+<p>Created using Unity Canvas:</p>
+<pre tabindex="0"><code>Canvas
+ └── JoystickBackground (Image)
+       └── JoystickHandle (Image)
+</code></pre><p>The background stays anchored bottom‑left.<br>
+The handle moves inside it when dragging.</p>
+<h2 id="32-joystick-script">3.2 Joystick Script<a hidden class="anchor" aria-hidden="true" href="#32-joystick-script">#</a></h2>
+<p>A simplified joystick script reads drag direction and returns a normalized vector.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> Vector2 GetDirection()
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> CurrentAction = <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnForwardPressed()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        CurrentAction = <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnLeftPressed()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        CurrentAction = <span style="color:#ae81ff">2</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnRightPressed()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        CurrentAction = <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnButtonReleased()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        CurrentAction = <span style="color:#ae81ff">0</span>; <span style="color:#75715e">// no action</span>
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> input;
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>Each UI button calls these methods through Unity’s <strong>OnClick()</strong> and <strong>OnPointerDown/Up</strong> events.</p>
-<h1 id="23-connecting-the-input-to-trackbot">2.3 Connecting the Input to TrackBot<a hidden class="anchor" aria-hidden="true" href="#23-connecting-the-input-to-trackbot">#</a></h1>
-<p>Inside <strong><code>TrackBot.cs</code></strong> (your real file ), in the <code>Heuristic()</code> method, I replaced the keyboard logic with mobile logic:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> MobileInputController mobileInput;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> Heuristic(<span style="color:#66d9ef">in</span> ActionBuffers actionsOut)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> discreteActionsOut = actionsOut.DiscreteActions;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Default: do nothing</span>
-</span></span><span style="display:flex;"><span>    discreteActionsOut[<span style="color:#ae81ff">0</span>] = <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Mobile action (from UI buttons)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (mobileInput != <span style="color:#66d9ef">null</span>)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        discreteActionsOut[<span style="color:#ae81ff">0</span>] = mobileInput.CurrentAction;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>This ensures:</p>
+</span></span></code></pre></div><p>This gives a vector in range [-1, 1] × [-1, 1].</p>
+<h2 id="33-trackbot-mobile-controller">3.3 TrackBot Mobile Controller<a hidden class="anchor" aria-hidden="true" href="#33-trackbot-mobile-controller">#</a></h2>
+<p>The TrackBot now:</p>
 <ul>
-<li>desktop training still works</li>
-<li>mobile now controls the agent</li>
-<li>RL logic is unchanged</li>
+<li>Rotates smoothly toward joystick direction</li>
+<li>Moves forward based on joystick magnitude</li>
+<li>Uses Rigidbody for physics‑friendly motion</li>
 </ul>
-<p>This approach abstracts the input cleanly and matches the architecture expected in ML-Agents.</p>
-<h1 id="3-deploying-the-application-5-points">3) Deploying the Application (5 Points)<a hidden class="anchor" aria-hidden="true" href="#3-deploying-the-application-5-points">#</a></h1>
-<p>The second part of the lab was to <strong>deploy the adapted application to a mobile device</strong>.</p>
-<p>I followed the official Unity documentation for Android deployment:</p>
-<p><a href="https://docs.unity3d.com/Manual/android-BuildProcess.html">https://docs.unity3d.com/Manual/android-BuildProcess.html</a></p>
-<h1 id="31-environment-setup">3.1 Environment Setup<a hidden class="anchor" aria-hidden="true" href="#31-environment-setup">#</a></h1>
-<p>In Unity Hub, I installed:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>Vector3 moveDir = <span style="color:#66d9ef">new</span> Vector3(dir.x, <span style="color:#ae81ff">0</span>, dir.y);
+</span></span><span style="display:flex;"><span>transform.rotation = Quaternion.Lerp(...);
+</span></span><span style="display:flex;"><span>rb.MovePosition(...);
+</span></span></code></pre></div><p>This creates a very natural 2D robot‑like movement.</p>
+<h2 id="4-deployment-to-mobile-android">4) Deployment to Mobile (Android)<a hidden class="anchor" aria-hidden="true" href="#4-deployment-to-mobile-android">#</a></h2>
+<h3 id="requirements-installed-via-unity-hub">Requirements installed via Unity Hub:<a hidden class="anchor" aria-hidden="true" href="#requirements-installed-via-unity-hub">#</a></h3>
 <ul>
 <li>Android Build Support</li>
-<li>Android SDK</li>
-<li>Android NDK</li>
-<li>OpenJDK</li>
+<li>SDK, NDK, OpenJDK</li>
 </ul>
-<p>This step is essential, without it Unity cannot export APKs.</p>
-<h1 id="32-configuring-the-build-settings">3.2 Configuring the Build Settings<a hidden class="anchor" aria-hidden="true" href="#32-configuring-the-build-settings">#</a></h1>
-<p>In <em>File → Build Settings → Android</em>:</p>
+<h3 id="build-settings">Build Settings:<a hidden class="anchor" aria-hidden="true" href="#build-settings">#</a></h3>
 <ul>
-<li>Switched platform to Android</li>
-<li>Set resolution &amp; presentation to portrait</li>
-<li>Disabled unused features for performance</li>
-<li>Ensured minimum API level ≥ Android 8.0</li>
+<li>Switch platform → Android</li>
+<li>Resolution = Landscape</li>
+<li>ARM64 enabled</li>
+<li>Minimal API Level = Android 8.0</li>
 </ul>
-<h1 id="33-deploying-to-device">3.3 Deploying to Device<a hidden class="anchor" aria-hidden="true" href="#33-deploying-to-device">#</a></h1>
-<p>Steps:</p>
+<h3 id="steps">Steps:<a hidden class="anchor" aria-hidden="true" href="#steps">#</a></h3>
 <ol>
-<li>Enabled developer mode on the phone</li>
-<li>Enabled USB debugging</li>
-<li>Connected phone via ADB</li>
-<li>Clicked <strong>Build &amp; Run</strong></li>
+<li>Enable USB debugging</li>
+<li>Connect device</li>
+<li>Press <strong>Build &amp; Run</strong></li>
 </ol>
-<p>Unity compiled the APK and installed it directly on the device.</p>
-<h1 id="4-testing-the-mobile-application">4) Testing the Mobile Application<a hidden class="anchor" aria-hidden="true" href="#4-testing-the-mobile-application">#</a></h1>
-<p>After deployment, the TrackBot environment worked as expected:</p>
+<p>Unity automatically builds an APK and installs it on the phone.</p>
+<h2 id="5-mobile-testing">5) Mobile Testing<a hidden class="anchor" aria-hidden="true" href="#5-mobile-testing">#</a></h2>
+<p>The final mobile build works as expected:</p>
 <ul>
-<li>Touch buttons correctly triggered actions</li>
-<li>The TrackBot rotated and moved exactly like on desktop</li>
-<li>Rewards, collisions, and episode resets remained unchanged</li>
+<li>Joystick controls movement in all directions</li>
+<li>Touch input is smooth and responsive</li>
+<li>TrackBot physics identical to desktop</li>
+<li>Rewards, resets, collisions unchanged</li>
+<li>Training remains unaffected because joystick control is separate from ML‑Agents policy inference</li>
 </ul>
-<p>The GUI debugging script (<code>GUI_TrackBot.cs</code> ) worked perfectly on mobile and was very helpful for observing:</p>
+<h2 id="6-problems--solutions">6) Problems &amp; Solutions<a hidden class="anchor" aria-hidden="true" href="#6-problems--solutions">#</a></h2>
+<h3 id="problem-touch-release-not-resetting-movement"><strong>Problem:</strong> Touch release not resetting movement<a hidden class="anchor" aria-hidden="true" href="#problem-touch-release-not-resetting-movement">#</a></h3>
+<p><strong>Fix:</strong> Use <code>OnPointerUp</code> instead of <code>OnClick</code>.</p>
+<h3 id="problem-joystick-not-working-on-mobile"><strong>Problem:</strong> Joystick not working on mobile<a hidden class="anchor" aria-hidden="true" href="#problem-joystick-not-working-on-mobile">#</a></h3>
+<p><strong>Fix:</strong> EventSystem missing. Added automatically via<br>
+<code>GameObject → UI → EventSystem</code>.</p>
+<h3 id="problem-trackbot-too-sensitive"><strong>Problem:</strong> TrackBot too sensitive<a hidden class="anchor" aria-hidden="true" href="#problem-trackbot-too-sensitive">#</a></h3>
+<p><strong>Fix:</strong> Clamp joystick magnitude and reduce speed on mobile.</p>
+<h2 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h2>
+<p>This lab successfully demonstrates:</p>
 <ul>
-<li>episode number</li>
-<li>step count</li>
-<li>cumulative reward</li>
+<li>Converting an ML‑Agents environment into a mobile‑friendly experience</li>
+<li>Implementing an intuitive touch‑based joystick</li>
+<li>Deploying and testing a Unity mobile build</li>
+<li>Preserving the RL logic while adding manual control</li>
 </ul>
-<p>This helped confirm that the RL logic stayed intact.</p>
-<h1 id="5-problems-encountered--how-i-solved-them">5) Problems Encountered &amp; How I Solved Them<a hidden class="anchor" aria-hidden="true" href="#5-problems-encountered--how-i-solved-them">#</a></h1>
-<h3 id="problem-1--button-presses-felt"><em>Problem 1 — Button presses felt &ldquo;off&rdquo; (agent kept moving after releasing).</em><a hidden class="anchor" aria-hidden="true" href="#problem-1--button-presses-felt">#</a></h3>
-<p><strong>Cause:</strong>
-Using only <code>OnClick()</code> does not detect release.</p>
-<p><strong>Fix:</strong>
-Use <strong>OnPointerDown</strong> and <strong>OnPointerUp</strong> events:</p>
-<ul>
-<li>Down → set action</li>
-<li>Up → return to action 0</li>
-</ul>
-<h3 id="problem-2--touch-inputs-not-detected-in-build"><em>Problem 2 — Touch inputs not detected in build.</em><a hidden class="anchor" aria-hidden="true" href="#problem-2--touch-inputs-not-detected-in-build">#</a></h3>
-<p><strong>Cause:</strong> EventSystem missing in scene.</p>
-<p><strong>Fix:</strong>
-Added:</p>
-<pre tabindex="0"><code>GameObject → UI → EventSystem
-</code></pre><h3 id="problem-3--the-trackbot-rotated-too-fast-on-mobile"><em>Problem 3 — The TrackBot rotated too fast on mobile.</em><a hidden class="anchor" aria-hidden="true" href="#problem-3--the-trackbot-rotated-too-fast-on-mobile">#</a></h3>
-<p><strong>Cause:</strong> User presses faster than keyboard repeat rate.</p>
-<p><strong>Fix:</strong>
-Reduced rotation speed on mobile builds using:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#75715e">#if</span> UNITY_ANDROID
-</span></span><span style="display:flex;"><span>_rotationSpeed = <span style="color:#ae81ff">120f</span>;
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif</span>
-</span></span></code></pre></div><h1 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h1>
-<p>In summary: this lab was to show the transformation of the TrackBot RL experiment into a functional mobile application.</p>
-<p>I learned:</p>
-<ul>
-<li>how to create mobile-friendly UI</li>
-<li>how to deploy Unity applications to Android</li>
-<li>how to debug mobile behavior</li>
-</ul>
+<p>The TrackBot environment is now fully usable on mobile and much more interactive.</p>
 
   </div>
 
