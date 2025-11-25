@@ -1,5 +1,5 @@
 ---
-title: "Master 2 - Human Computer Interaction: Lab Homework 1 – Blog Setup & Unity ML-Agents Environment"
+title: "Master 2 - Human Computer Interaction: Lab 1 – Blog Setup & Unity ML-Agents Environment"
 date: 2025-10-18
 description: "Setting up an online blog, configuring Unity ML-Agents, testing environments, overcoming issues, and extending the baseline scenario."
 tags: ["HCI", "Unity", "ML-Agents", "Reinforcement Learning", "Lab Work"]

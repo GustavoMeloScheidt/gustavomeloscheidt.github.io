@@ -1,5 +1,5 @@
 ---
-title: "Master 2 - Human Computer Interaction: Lab Homework 2 – Mobile Controls & Deployment for ML-Agents Project"
+title: "Master 2 - Human Computer Interaction: Lab 2 – Mobile Controls & Deployment for ML-Agents Project"
 date: 2025-10-25
 description: "Adapting the TrackBot reinforcement learning environment to mobile using on-screen buttons and deploying the Unity build to Android."
 tags: ["Unity", "Mobile Development", "ML-Agents", "Reinforcement Learning", "HCI", "Deployment"]
