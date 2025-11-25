@@ -16,6 +16,8 @@ The original TrackBot could only be controlled through discrete keyboard actions
 <!--more-->
 ![Mobile Trackbot](/assets/mobile_trackbot.gif)
 
+Note: as you can see, I am using the "mobile" version inside my Unity (in the computer), that is because I do not have an Android to test it and Apple makes it really hard to deploy, but everything should work the same in your phone.
+
 ## 1) Original Agent Behavior  
 The TrackBot originally had three discrete actions:
 
